@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    {% block links %}
+    <title>Pokeproject</title>
+    {% endblock %}
+</head>
+    <body class="bg-gray-200 h-screen">
+        <header class="bg-white py-2">
+            <div x-data="{ open: false }" class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-around md:flex-row md:px-6">
+                <div class="flex flex-row items-center justify-between">
+                    <a href="/pokemons">
+                        <div class="flex flex-row justify-around items-center">
+                            <img src="{% static 'images/pokeball.png' %}" width="50px" alt="pokeball img">
+                            <h1 class="px-5 font-semibold text-lg uppercase tracking-widest text-red-500">Pokeproject</h1>
+                        </div>
+                    </a>
+                    <button class="md:hidden rounded-lg focus:outline-none focus:shadow-outline" @click="open = !open">
+                        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+                          <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                          <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div :class="{'flex': open, 'hidden': !open}"  class="flex-col flex-grow pb-4 md:pb-0 hidden md:flex justify-between md:justify-end md:flex-row">
+                    <a href="/pokemons"><h1 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Home</h1></a>
+                    <a href="/pokemons/list"><h2 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">List</h2></a>
+                    <a href="#"><h2 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Register</h2></a>
+                    <a href="#"><h2 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Login</h2></a>
+                </div>
+            </div>
+        </header>
+        {% block content %}
+        {% endblock %}
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+    </body>
+</html>

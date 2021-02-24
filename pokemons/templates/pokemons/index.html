@@ -1,0 +1,36 @@
+{% extends 'pokemons/base.html' %}
+{% load static %}
+<body>
+	{% block content %}
+	<main class="text-center mx-auto">
+		<div class="bg-indigo-500">
+			<div class="py-52 flex flex-wrap md:flex justify-around">
+				<div class="flex items-center justify-center">
+					<div>
+						<h1 class="text-6xl md:text-8xl font-bold text-white">PokeProject</h1>
+						<p class="pt-5 text-gray-100 tracking-widest uppercase">using the PokeApi</p>
+						<a href="/pokemons/list" class="bg-white inline-block border-white border-2 hover:border-white hover:bg-indigo-500 hover:text-white text-indigo-500 font-bold py-2 px-4 m-5 rounded-full">View list</a>
+					</div>
+				</div>
+				<div>
+					<img src="{% static 'images/pokemons.png' %}" alt="group of pokemons image">					
+				</div>
+			</div>
+			<div class="flex justify-center pb-32">
+				<a>
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" width="50px" height="50px" viewBox="0 0 24 24" stroke="white">>
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+					</svg>
+				</a>
+			</div>
+		</div>
+		<div class="bg-gray-200 h-screen my-32">
+			<h2 class="text-red-500 text-6xl font-bold">Create your pokedex !</h2>
+			<div class="flex justify-center mt-16">
+				<a href="#" class="bg-red-500 shadow-2xl inline-block hover:text-red-500 hover:bg-white text-white font-bold py-2 px-4 m-5 rounded-full">Register</a>
+				<a href="#" class="bg-red-500 shadow-2xl inline-block hover:text-red-500 hover:bg-white text-white font-bold py-2 px-4 m-5 rounded-full">Login</a>
+			</div>
+		</div>
+	</main>
+	{% endblock %}
+</body>
