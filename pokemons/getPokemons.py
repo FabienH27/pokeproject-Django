@@ -20,10 +20,11 @@ def loadGeneration(xMin, xMax):
     for i in range(xMin, xMax):
         pokemon = url + str(i)
         response = requests.get(pokemon)
-        pokemondata = json.loads(response.text)
-        pokemon = updatePokemon(pokemondata)
-        updateType(pokemondata['types'],pokemon)
-        #updateStats(pokemondata['stats'], pokemon)
+        if(response.status_code == 200):        
+            pokemondata = json.loads(response.text)
+            pokemon = updatePokemon(pokemondata)
+            updateType(pokemondata['types'],pokemon)
+            updateStats(pokemondata['stats'], pokemon)
 
 #Fonction utilisée pour insérer les données dans la base de données
 def updatePokemon(pokemondata):
@@ -65,7 +66,7 @@ loadGeneration(152, 251)
 print('-----------Génération 3-------------')
 loadGeneration(252, 386)
 print('-----------Génération 4-------------')
-loadGeneration(387, 493)
+loadGeneration(389,449)
 print('-----------Génération 5-------------')
 loadGeneration(494, 649)
 print('-----------Génération 6-------------')
