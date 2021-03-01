@@ -20,13 +20,22 @@
             <div class="md:flex justify-around bg-poke-{{pokemon.types.first}} py-16 text-white">
                 <div class="max-h-full flex items-center">
                     <div class="text-center mx-auto">
-                        <!--<h4 class="tracking-widest uppercase">pokemon gen I</h4>-->
                         <h1 class="text-5xl font-extrabold capitalize md:text-7xl">{{ pokemon.name }}</h1>
                         <div class="flex justify-around pt-5 text-center w-56 mx-auto">
                             <h5 class="bg-white rounded-full text-poke-{{pokemon.types.first}} font-bold py-2 px-5">{{pokemon.types.first}}</h5>
                             {% if pokemon.types.count > 1 %}
                             <h5 class="bg-white rounded-full text-poke-{{pokemon.types.first}} font-bold py-2 px-5">{{pokemon.types.last}}</h5>
                             {% endif %}
+                        </div>
+                        <div class="flex justify-around pt-5 text-center w-56 mx-auto">
+                            <div>
+                                <h2 class="text-3xl">{{pokemon.height}}</h2>
+                                <h4 class="font-bold">Height</h4>
+                            </div>
+                            <div>
+                                <h2 class="text-3xl">{{pokemon.weight}}</h2>
+                                <h4 class="font-bold">Weight</h4>
+                            </div>
                         </div>
                     </div>
                 </div>
