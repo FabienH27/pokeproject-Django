@@ -26,10 +26,12 @@
 		</div>
 		<div class="bg-gray-200 h-screen my-32">
 			<h2 class="text-red-500 text-6xl font-bold">Create your pokedex !</h2>
+			{% if not request.user.username %}
 			<div class="flex justify-center mt-16">
 				<a href="/pokemons/register" class="bg-red-500 shadow-2xl inline-block hover:text-red-500 hover:bg-white text-white font-bold py-2 px-4 m-5 rounded-full">Register</a>
 				<a href="/pokemons/login" class="bg-red-500 shadow-2xl inline-block hover:text-red-500 hover:bg-white text-white font-bold py-2 px-4 m-5 rounded-full">Login</a>
 			</div>
+			{% endif %}
 		</div>
 	</main>
 	{% endblock %}

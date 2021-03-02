@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
 from .models import Pokemon, PokemonStat
 
 from .forms import RegisterForm
@@ -39,5 +40,13 @@ def register(request):
         form = RegisterForm()
     return render(request, 'pokemons/register.html', {'form': form})
 
-def login(request):
-    return render(request, 'pokemons/login.html')
+def login_view(request):
+    if request.method == 'POST':  
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('/pokemons')
+    else:
+        form = AuthenticationForm()
+    return render(request,'pokemons/login.html',{'form':form})
