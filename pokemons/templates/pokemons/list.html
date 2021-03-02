@@ -1,82 +1,70 @@
 {% extends 'pokemons/base.html' %}
-<html>
-	<head>
-		<title>PokeProject</head>/title>
-	</head>
-	<body class="h-screen" style="background: #edf2f7;">
-		<header class="text-center pt-5">
-			<nav>
-				<a class="text-indigo-500" href="/pokemons">Accueil</a>
-			</nav>	
-		</header>
-		{% block content %}
-		<main class="text-center">
-			<h1 class="text-gray-500 font-bold text-5xl my-8">Pokemons' list</h1>
-			<div class="container mx-auto grid xl:grid-cols-5 md:grid-cols-2">
-				{% for pokemon in page_object %}
-						<div class="flex-shrink-0 m-6 relative bg-poke-{{pokemon.types.first}} mx-auto rounded-lg max-w-xs shadow-xl">
-							<a href="/pokemons/details/{{pokemon.id}}">
-								<svg class="absolute bottom-0 left-0 mb-8" viewBox="0 0 375 283" fill="none" style="transform: scale(1.5); opacity: 0.1;">
-									<rect x="159.52" y="175" width="152" height="152" rx="8" transform="rotate(-45 159.52 175)" fill="white"/>
-									<rect y="107.48" width="152" height="152" rx="8" transform="rotate(-45 0 107.48)" fill="white" />
-								</svg>
-								<div class="relative pt-10 px-10 flex items-center justify-center">
-									<div class="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3" style="background: radial-gradient(black, transparent 60%); transform: rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1); opacity: 0.2;"></div>
-									<img class="relative w-40" src="{{pokemon.default_front_sprite_url}}" alt="">
-								</div>
-								<div class="relative text-white px-6 pb-6 mt-6">
-									<span class="block font-semibold text-center text-3xl">{{ pokemon.name }}</span>
-									<div class="flex justify-around">
-										<span class="bg-white rounded-full text-poke-{{pokemon.types.first}} text-xs font-bold px-3 py-2 my-2 leading-none flex items-center">{{pokemon.types.first}}</span>
-										{% if pokemon.types.count > 1 %}
-										<span class="bg-white rounded-full text-poke-{{pokemon.types.last}} text-xs font-bold px-3 py-2 my-2 leading-none flex items-center">{{pokemon.types.last}}</span>
-										{% endif %}
-									</div>
-								</div>
-							</a>
+{% block content %}
+<main class="text-center">
+	<h1 class="text-gray-500 font-bold text-5xl my-8">Pokemons' list</h1>
+	<div class="container mx-auto grid xl:grid-cols-5 md:grid-cols-2">
+		{% for pokemon in page_object %}
+				<div class="flex-shrink-0 m-6 relative bg-poke-{{pokemon.types.first}} mx-auto rounded-lg max-w-xs shadow-xl">
+					<a href="/pokemons/details/{{pokemon.id}}">
+						<svg class="absolute bottom-0 left-0 mb-8" viewBox="0 0 375 283" fill="none" style="transform: scale(1.5); opacity: 0.1;">
+							<rect x="159.52" y="175" width="152" height="152" rx="8" transform="rotate(-45 159.52 175)" fill="white"/>
+							<rect y="107.48" width="152" height="152" rx="8" transform="rotate(-45 0 107.48)" fill="white" />
+						</svg>
+						<div class="relative pt-10 px-10 flex items-center justify-center">
+							<div class="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3" style="background: radial-gradient(black, transparent 60%); transform: rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1); opacity: 0.2;"></div>
+							<img class="relative w-40" src="{{pokemon.default_front_sprite_url}}" alt="">
 						</div>
-				{% endfor %}
-			</div>
-			<div class="flex text-gray-700 justify-center py-16">
-				{% if page_object.has_previous %}				
-				<div class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer">
-					<a href="?page={{ page_object.previous_page_number }}">
-						<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left w-6 h-6">
-							<polyline points="15 18 9 12 15 6"></polyline>
-						</svg>						
+						<div class="relative text-white px-6 pb-6 mt-6">
+							<span class="block font-semibold text-center text-3xl">{{ pokemon.name }}</span>
+							<div class="flex justify-around">
+								<span class="bg-white rounded-full text-poke-{{pokemon.types.first}} text-xs font-bold px-3 py-2 my-2 leading-none flex items-center">{{pokemon.types.first}}</span>
+								{% if pokemon.types.count > 1 %}
+								<span class="bg-white rounded-full text-poke-{{pokemon.types.last}} text-xs font-bold px-3 py-2 my-2 leading-none flex items-center">{{pokemon.types.last}}</span>
+								{% endif %}
+							</div>
+						</div>
 					</a>
 				</div>
-				{% endif %}
-				<div class="flex h-12 font-medium rounded-full bg-gray-200">
-					{% if page_object.has_previous != False %}	
-						<a class="w-12 flex justify-center items-center cursor-pointer rounded-full" href="?page=1">1</a>				
-					{% endif %}
-					{% if page_object.previous_page_number > 1 %}
-					<a class="w-12 flex justify-center items-center cursor-pointer rounded-full">...</a>
-					<a class="w-12 flex justify-center items-center cursor-pointer rounded-full" href="?page={{page_object.previous_page_number}}">
-						{{page_object.previous_page_number}}
-					</a>
-					{% endif %}	
-					<div class="w-12 flex justify-center items-center cursor-pointer rounded-full bg-indigo-500 text-white">{{page_object.number}}</div>	
-					{% if page_object.next_page_number < 30 %}
-					<a class="w-12 flex justify-center items-center cursor-pointer rounded-full" href="?page={{page_object.next_page_number}}">{{page_object.next_page_number}}</a>
-					<div class="w-12 flex justify-center items-center cursor-pointer rounded-full">...</div>
-					{% endif %}
-					{% if page_object.has_next != False %}
-					<a class="w-12 flex justify-center items-center cursor-pointer rounded-full" href="?page={{ page_object.paginator.num_pages}}">{{page_object.paginator.num_pages}}</a>
-					{% endif %}
-				</div>
-				{% if page_object.has_next %}
-				<div class="h-12 w-12 ml-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer">
-					<a href="?page={{ page_object.next_page_number }}">
-						<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right w-6 h-6">
-							<polyline points="9 18 15 12 9 6"></polyline>
-						</svg>		
-					</a>
-				</div>
-				{% endif %}
-			</div>
-		</main>
-		{% endblock %}
-    </body>
-</html>
+		{% endfor %}
+	</div>
+	<div class="flex text-gray-700 justify-center py-16">
+		{% if page_object.has_previous %}				
+		<div class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer">
+			<a href="?page={{ page_object.previous_page_number }}">
+				<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left w-6 h-6">
+					<polyline points="15 18 9 12 15 6"></polyline>
+				</svg>						
+			</a>
+		</div>
+		{% endif %}
+		<div class="flex h-12 font-medium rounded-full bg-gray-200">
+			{% if page_object.has_previous != False %}	
+				<a class="w-12 flex justify-center items-center cursor-pointer rounded-full" href="?page=1">1</a>				
+			{% endif %}
+			{% if page_object.previous_page_number > 1 %}
+			<a class="w-12 flex justify-center items-center cursor-pointer rounded-full">...</a>
+			<a class="w-12 flex justify-center items-center cursor-pointer rounded-full" href="?page={{page_object.previous_page_number}}">
+				{{page_object.previous_page_number}}
+			</a>
+			{% endif %}	
+			<div class="w-12 flex justify-center items-center cursor-pointer rounded-full bg-indigo-500 text-white">{{page_object.number}}</div>	
+			{% if page_object.next_page_number < 30 %}
+			<a class="w-12 flex justify-center items-center cursor-pointer rounded-full" href="?page={{page_object.next_page_number}}">{{page_object.next_page_number}}</a>
+			<div class="w-12 flex justify-center items-center cursor-pointer rounded-full">...</div>
+			{% endif %}
+			{% if page_object.has_next != False %}
+			<a class="w-12 flex justify-center items-center cursor-pointer rounded-full" href="?page={{ page_object.paginator.num_pages}}">{{page_object.paginator.num_pages}}</a>
+			{% endif %}
+		</div>
+		{% if page_object.has_next %}
+		<div class="h-12 w-12 ml-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer">
+			<a href="?page={{ page_object.next_page_number }}">
+				<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right w-6 h-6">
+					<polyline points="9 18 15 12 9 6"></polyline>
+				</svg>		
+			</a>
+		</div>
+		{% endif %}
+	</div>
+</main>
+{% endblock %}
