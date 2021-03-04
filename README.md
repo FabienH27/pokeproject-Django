@@ -6,6 +6,8 @@ A personal project to learn Python & Django.
 
 - In the pokeproject folder : copy `.env.example` file to `.env` 
 - Change your settings inside the `.env` file to match your MySQL Database configuration
+- Generate a new secret key from the cmd with : `python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())' `
+- Paste this key to the `.env` file as follows : `SECRET_KEY=your_key`
 
 ### Load pokemons
 
