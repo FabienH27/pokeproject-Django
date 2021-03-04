@@ -4,8 +4,13 @@
 	<h1 class="text-gray-500 font-bold text-5xl my-8">Pokemons' list</h1>
 	<div class="container mx-auto grid xl:grid-cols-5 md:grid-cols-2">
 		{% for pokemon in page_object %}
-				<div class="flex-shrink-0 m-6 relative bg-poke-{{pokemon.types.first}} mx-auto rounded-lg max-w-xs shadow-xl">
-					<a href="/pokemons/details/{{pokemon.id}}">
+				<div class="static flex-shrink-0 m-6 overflow-hidden relative bg-poke-{{pokemon.type.first}} mx-auto rounded-lg max-w-xs shadow-xl">
+					<button class="absolute -top-6 -right-6 bg-white rounded-full mr-8 mt-8 z-10 transform hover:scale-110" name="add_pokemon">
+						<svg xmlns="http://www.w3.org/2000/svg" class="text-poke-{{pokemon.type.first}}" viewBox="0 0 24 24" width="25px" height="25px" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+						</svg>
+					</button>
+					<a href="{% url 'details' pokemon.id %}">
 						<svg class="absolute bottom-0 left-0 mb-8" viewBox="0 0 375 283" fill="none" style="transform: scale(1.5); opacity: 0.1;">
 							<rect x="159.52" y="175" width="152" height="152" rx="8" transform="rotate(-45 159.52 175)" fill="white"/>
 							<rect y="107.48" width="152" height="152" rx="8" transform="rotate(-45 0 107.48)" fill="white" />
@@ -17,9 +22,9 @@
 						<div class="relative text-white px-6 pb-6 mt-6">
 							<span class="block font-semibold text-center text-3xl">{{ pokemon.name }}</span>
 							<div class="flex justify-around">
-								<span class="bg-white rounded-full text-poke-{{pokemon.types.first}} text-xs font-bold px-3 py-2 my-2 leading-none flex items-center">{{pokemon.types.first}}</span>
-								{% if pokemon.types.count > 1 %}
-								<span class="bg-white rounded-full text-poke-{{pokemon.types.last}} text-xs font-bold px-3 py-2 my-2 leading-none flex items-center">{{pokemon.types.last}}</span>
+								<span class="bg-white rounded-full text-poke-{{pokemon.type.first}} text-xs font-bold px-3 py-2 my-2 leading-none flex items-center">{{pokemon.type.first}}</span>
+								{% if pokemon.type.count > 1 %}
+								<span class="bg-white rounded-full text-poke-{{pokemon.type.last}} text-xs font-bold px-3 py-2 my-2 leading-none flex items-center">{{pokemon.type.last}}</span>
 								{% endif %}
 							</div>
 						</div>

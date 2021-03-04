@@ -14,7 +14,7 @@
         <header class="bg-white py-2">
             <div x-data="{ open: false }" class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-around md:flex-row md:px-6">
                 <div class="flex flex-row items-center justify-between">
-                    <a href="/pokemons">
+                    <a href="{% url 'index' %}">
                         <div class="flex flex-row justify-around items-center">
                             <img src="{% static 'images/pokeball.png' %}" width="50px" alt="pokeball img">
                             <h1 class="px-5 font-semibold text-lg uppercase tracking-widest text-red-500">Pokeproject</h1>
@@ -28,11 +28,17 @@
                     </button>
                 </div>
                 <div :class="{'flex': open, 'hidden': !open}"  class="flex-col flex-grow pb-4 md:pb-0 hidden md:flex justify-between md:justify-end md:flex-row">
-                    <a href="/pokemons"><h1 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Home</h1></a>
-                    <a href="/pokemons/list"><h2 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">List</h2></a>
+                    {% if request.user.username %}
+                    {% endif %}
+                    <a href="{% url 'index' %}"><h1 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Home</h1></a>
+                    <a href="{% url 'list' %}"><h2 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">List</h2></a>
                     {% if not request.user.username %}
-                    <a href="/pokemons/register"><h2 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Register</h2></a>
-                    <a href="/pokemons/login"><h2 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Login</h2></a>
+                    <a href="{% url 'register' %}"><h2 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Register</h2></a>
+                    <a href="{% url 'login' %}"><h2 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Login</h2></a>
+                    {% else %}
+                    <a href="{% url 'dashboard' %}"><h2 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Dashboard</h2></a>
+                    <p class="text-gray-500 font-semibold h-full my-auto md:border-l-2 border-gray-500 px-5 ">{{request.user.username}}</p>
+                    <a href="{% url 'dashboard' %}"><h2 class="px-5 py-2 font-semibold text-gray-500 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Log out</h2></a>
                     {% endif %}
                 </div>
             </div>

@@ -16,15 +16,15 @@
 </head>
     <body>
         {% block content %}
-        <main class="h-screen bg-gray-200 bg-poke-{{pokemon.types.first}}-light">
-            <div class="md:flex justify-around bg-poke-{{pokemon.types.first}} py-16 text-white">
+        <main class="h-screen bg-gray-200 bg-poke-{{pokemon.type.first}}-light">
+            <div class="md:flex justify-around bg-poke-{{pokemon.type.first}} py-16 text-white">
                 <div class="max-h-full flex items-center">
                     <div class="text-center mx-auto">
                         <h1 class="text-5xl font-extrabold capitalize md:text-7xl">{{ pokemon.name }}</h1>
                         <div class="flex justify-around pt-5 text-center w-56 mx-auto">
-                            <h5 class="bg-white rounded-full text-poke-{{pokemon.types.first}} font-bold py-2 px-5">{{pokemon.types.first}}</h5>
-                            {% if pokemon.types.count > 1 %}
-                            <h5 class="bg-white rounded-full text-poke-{{pokemon.types.first}} font-bold py-2 px-5">{{pokemon.types.last}}</h5>
+                            <h5 class="bg-white rounded-full text-poke-{{pokemon.type.first}} font-bold py-2 px-5">{{pokemon.type.first}}</h5>
+                            {% if pokemon.type.count > 1 %}
+                            <h5 class="bg-white rounded-full text-poke-{{pokemon.type.first}} font-bold py-2 px-5">{{pokemon.type.last}}</h5>
                             {% endif %}
                         </div>
                         <div class="flex justify-around pt-5 text-center w-56 mx-auto">
@@ -71,15 +71,15 @@
                 <table class="table mx-auto w-80">
                     <thead>
                         <tr>
-                            <th class="text-poke-{{pokemon.types.first}}">Statistics</th>
-                            <th class="text-poke-{{pokemon.types.first}}">Value</th>
+                            <th class="text-poke-{{pokemon.type.first}}">Statistics</th>
+                            <th class="text-poke-{{pokemon.type.first}}">Value</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for stat in stats %}
                         <tr>
-                            <td class="border-poke-{{pokemon.types.first}} border px-5 py-2 text-poke-{{pokemon.types.first}} font-bold">{{stat.stat}}</td>
-                            <td class="border-poke-{{pokemon.types.first}} border px-5 py-2 text-poke-{{pokemon.types.first}} font-bold">{{stat.value}}</td>
+                            <td class="border-poke-{{pokemon.type.first}} border px-5 py-2 text-poke-{{pokemon.type.first}} font-bold">{{stat.stat}}</td>
+                            <td class="border-poke-{{pokemon.type.first}} border px-5 py-2 text-poke-{{pokemon.type.first}} font-bold">{{stat.value}}</td>
                         </tr>       
                         {% endfor %}
                     </tbody>
