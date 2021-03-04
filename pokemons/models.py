@@ -1,6 +1,7 @@
 from typing import Type
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Pokemon(models.Model):
@@ -18,22 +19,21 @@ class Pokemon(models.Model):
     def __str__(self):
         return self.name
 
-
 class Stat(models.Model):
     name = models.CharField(max_length=255)
-    pokemons = models.ManyToManyField(Pokemon,through='PokemonStat', related_name="stats")
+    pokemons = models.ManyToManyField(Pokemon,through='PokemonStat', related_name="stat")
     created = models.DateTimeField(default=timezone.now,editable=False)
     modified = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        db_table = 'stats'
+        db_table = 'stat'
         ordering = ['name']
     def __str__(self):
         return self.name
 
 class Type(models.Model):
     name = models.CharField(max_length=255)
-    pokemons = models.ManyToManyField(Pokemon, through='PokemonType',related_name="types")
+    pokemons = models.ManyToManyField(Pokemon, through='PokemonType',related_name="type")
     created = models.DateTimeField(default=timezone.now,editable=False)
     modified = models.DateTimeField(default=timezone.now)
 
@@ -60,3 +60,11 @@ class PokemonType(models.Model):
         db_table = 'pokemon_types'
     def __str__(self):
         return self.types.name
+
+class UserPokemon(models.Model):
+    pokemon = models.ForeignKey(Pokemon,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    class Meta:
+        db_table = 'user_pokemons'
+    def __str__(self):
+        return self.user.name
