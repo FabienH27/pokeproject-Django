@@ -49,4 +49,17 @@ def login_view(request):
             return redirect('/pokemons')
     else:
         form = AuthenticationForm()
-    return render(request,'pokemons/login.html',{'form':form})
+    return render(request,'pokemons/login.html',{'form':form})def addPokemon(request):
+    if request.method == 'GET':
+        pokemon_id = request.GET.get('pokemon_id')
+        user_id = request.GET.get('user_id')
+        pokemon = Pokemon.objects.get(id=pokemon_id)
+        user = User.objects.get(id=user_id)
+
+        data = {
+            'exists': UserPokemon.objects.filter(user=user,pokemon=pokemon).exists()
+        }
+        if not data['exists']:
+            m,created = UserPokemon.objects.update_or_create(user=user, pokemon=pokemon)
+            m.save()
+    return JsonResponse(data)

@@ -67,4 +67,4 @@ class UserPokemon(models.Model):
     class Meta:
         db_table = 'user_pokemons'
     def __str__(self):
-        return self.user.name
+        return self.pokemon.name

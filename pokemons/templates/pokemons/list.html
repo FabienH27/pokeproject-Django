@@ -2,35 +2,49 @@
 {% block content %}
 <main class="text-center">
 	<h1 class="text-gray-500 font-bold text-5xl my-8">Pokemons' list</h1>
-	<div class="container mx-auto grid xl:grid-cols-5 md:grid-cols-2">
-		{% for pokemon in page_object %}
-				<div class="static flex-shrink-0 m-6 overflow-hidden relative bg-poke-{{pokemon.type.first}} mx-auto rounded-lg max-w-xs shadow-xl">
-					<button class="absolute -top-6 -right-6 bg-white rounded-full mr-8 mt-8 z-10 transform hover:scale-110" name="add_pokemon">
-						<svg xmlns="http://www.w3.org/2000/svg" class="text-poke-{{pokemon.type.first}}" viewBox="0 0 24 24" width="25px" height="25px" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-						</svg>
-					</button>
-					<a href="{% url 'details' pokemon.id %}">
-						<svg class="absolute bottom-0 left-0 mb-8" viewBox="0 0 375 283" fill="none" style="transform: scale(1.5); opacity: 0.1;">
-							<rect x="159.52" y="175" width="152" height="152" rx="8" transform="rotate(-45 159.52 175)" fill="white"/>
-							<rect y="107.48" width="152" height="152" rx="8" transform="rotate(-45 0 107.48)" fill="white" />
-						</svg>
-						<div class="relative pt-10 px-10 flex items-center justify-center">
-							<div class="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3" style="background: radial-gradient(black, transparent 60%); transform: rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1); opacity: 0.2;"></div>
-							<img class="relative w-40" src="{{pokemon.default_front_sprite_url}}" alt="">
-						</div>
-						<div class="relative text-white px-6 pb-6 mt-6">
-							<span class="block font-semibold text-center text-3xl">{{ pokemon.name }}</span>
-							<div class="flex justify-around">
-								<span class="bg-white rounded-full text-poke-{{pokemon.type.first}} text-xs font-bold px-3 py-2 my-2 leading-none flex items-center">{{pokemon.type.first}}</span>
-								{% if pokemon.type.count > 1 %}
-								<span class="bg-white rounded-full text-poke-{{pokemon.type.last}} text-xs font-bold px-3 py-2 my-2 leading-none flex items-center">{{pokemon.type.last}}</span>
-								{% endif %}
+	<div class="container mx-auto">
+		<div class="max-w-xl mx-auto" id="snackbar">
+			<div class="text-white px-6 py-4 border-0 rounded relative mb-4 bg-green-500" id="success">
+				<span class="inline-block align-middle mr-8" id="successMessage">
+					Pokemon has been successfully added to your pokedex !
+				</span>
+				<button class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none">
+				  <span>×</span>
+				</button>
+			</div>
+		</div>
+		<div class="grid xl:grid-cols-5 md:grid-cols-2">
+			{% for pokemon in page_object %}
+					<div class="static flex-shrink-0 m-6 overflow-hidden relative bg-poke-{{pokemon.type.first}} mx-auto rounded-lg max-w-xs shadow-xl">
+						{% if request.user.username  %}
+						<button class="absolute -top-6 -right-6 bg-white rounded-full mr-8 mt-8 z-10 transform hover:scale-110 focus:outline-none" name="add_pokemon" onclick="addPokemon('{{pokemon.id}}')">
+							<svg xmlns="http://www.w3.org/2000/svg" class="text-poke-{{pokemon.type.first}}" viewBox="0 0 24 24" width="25px" height="25px" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+							</svg>
+						</button>
+						{% endif %}
+						<a href="{% url 'details' pokemon.id %}">
+							<svg class="absolute bottom-0 left-0 mb-8" viewBox="0 0 375 283" fill="none" style="transform: scale(1.5); opacity: 0.1;">
+								<rect x="159.52" y="175" width="152" height="152" rx="8" transform="rotate(-45 159.52 175)" fill="white"/>
+								<rect y="107.48" width="152" height="152" rx="8" transform="rotate(-45 0 107.48)" fill="white" />
+							</svg>
+							<div class="relative pt-10 px-10 flex items-center justify-center">
+								<div class="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3" style="background: radial-gradient(black, transparent 60%); transform: rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1); opacity: 0.2;"></div>
+								<img class="relative w-40" src="{{pokemon.default_front_sprite_url}}" alt="">
 							</div>
-						</div>
-					</a>
-				</div>
-		{% endfor %}
+							<div class="relative text-white px-6 pb-6 mt-6">
+								<span class="block font-semibold text-center text-3xl" id="pokemon">{{ pokemon.name }}</span>
+								<div class="flex justify-around">
+									<span class="bg-white rounded-full text-poke-{{pokemon.type.first}} text-xs font-bold px-3 py-2 my-2 leading-none flex items-center">{{pokemon.type.first}}</span>
+									{% if pokemon.type.count > 1 %}
+									<span class="bg-white rounded-full text-poke-{{pokemon.type.last}} text-xs font-bold px-3 py-2 my-2 leading-none flex items-center">{{pokemon.type.last}}</span>
+									{% endif %}
+								</div>
+							</div>
+						</a>
+					</div>
+			{% endfor %}
+		</div>
 	</div>
 	<div class="flex text-gray-700 justify-center py-16">
 		{% if page_object.has_previous %}				
@@ -72,4 +86,31 @@
 		{% endif %}
 	</div>
 </main>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	function addPokemon(poke_id){
+		$.ajax({
+			url: "{% url 'addPokemon' %}",
+			data:{
+				pokemon_id: poke_id,
+				user_id: '{{request.user.id}}',
+			},
+			success: function(data){
+				if (data.exists == true){
+					$("#success").removeClass("bg-green-500").addClass("bg-red-500");
+					document.getElementById("successMessage").innerHTML = "This poke has already been added to your pokedex !";
+				}else{
+					$("#success").removeClass("bg-red-500").addClass("bg-green-500");
+					document.getElementById("successMessage").innerHTML = "Pokemon has been successfully added to your pokedex !";				
+				}
+				// Get the snackbar DIV
+				var x = document.getElementById("snackbar");
+				// Add the "show" class to DIV
+				x.className = "show";
+				// After 3 seconds, remove the show class from DIV
+				setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+			}
+		});
+	}
+</script>
 {% endblock %}

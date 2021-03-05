@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
     {% block links %}
     <title>Pokeproject</title>
     {% endblock %}
@@ -28,8 +29,6 @@
                     </button>
                 </div>
                 <div :class="{'flex': open, 'hidden': !open}"  class="flex-col flex-grow pb-4 md:pb-0 hidden md:flex justify-between md:justify-end md:flex-row">
-                    {% if request.user.username %}
-                    {% endif %}
                     <a href="{% url 'index' %}"><h1 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Home</h1></a>
                     <a href="{% url 'list' %}"><h2 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">List</h2></a>
                     {% if not request.user.username %}
@@ -38,7 +37,7 @@
                     {% else %}
                     <a href="{% url 'dashboard' %}"><h2 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Dashboard</h2></a>
                     <p class="text-gray-500 font-semibold h-full my-auto md:border-l-2 border-gray-500 px-5 ">{{request.user.username}}</p>
-                    <a href="{% url 'dashboard' %}"><h2 class="px-5 py-2 font-semibold text-gray-500 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Log out</h2></a>
+                    <a href="{% url 'logout' %}"><h2 class="px-5 py-2 font-semibold text-gray-500 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Log out</h2></a>
                     {% endif %}
                 </div>
             </div>
