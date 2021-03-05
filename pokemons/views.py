@@ -1,11 +1,12 @@
 from django.db import models
+from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Pokemon, PokemonStat
-
+from .models import Pokemon, PokemonStat, UserPokemon
 from .forms import RegisterForm
 
 def index(request):
@@ -49,7 +50,9 @@ def login_view(request):
             return redirect('/pokemons')
     else:
         form = AuthenticationForm()
-    return render(request,'pokemons/login.html',{'form':form})def addPokemon(request):
+    return render(request,'pokemons/login.html',{'form':form})
+
+def addPokemon(request):
     if request.method == 'GET':
         pokemon_id = request.GET.get('pokemon_id')
         user_id = request.GET.get('user_id')
