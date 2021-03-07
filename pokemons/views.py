@@ -52,6 +52,17 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request,'pokemons/login.html',{'form':form})
 
+def logout_view(request):
+    logout(request)
+    return redirect('/pokemons')
+
+@login_required(login_url='/pokemons/login')
+def dashboard(request):
+
+    userPokemons = UserPokemon.objects.filter(user=request.user)
+    print(userPokemons)
+    return render(request, 'pokemons/dashboard.html', {'user_pokemons':userPokemons})
+
 def addPokemon(request):
     if request.method == 'GET':
         pokemon_id = request.GET.get('pokemon_id')

@@ -98,7 +98,7 @@
 			success: function(data){
 				if (data.exists == true){
 					$("#success").removeClass("bg-green-500").addClass("bg-red-500");
-					document.getElementById("successMessage").innerHTML = "This poke has already been added to your pokedex !";
+					document.getElementById("successMessage").innerHTML = "This pokemon has already been added to your pokedex !";
 				}else{
 					$("#success").removeClass("bg-red-500").addClass("bg-green-500");
 					document.getElementById("successMessage").innerHTML = "Pokemon has been successfully added to your pokedex !";				
