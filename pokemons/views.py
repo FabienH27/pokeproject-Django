@@ -1,5 +1,6 @@
 from django.db import models
-from django.http import JsonResponse
+from django.core import serializers
+from django.http import JsonResponse, HttpResponse
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
@@ -58,7 +59,6 @@ def logout_view(request):
 
 @login_required(login_url='/pokemons/login')
 def dashboard(request):
-
     userPokemons = UserPokemon.objects.filter(user=request.user)
     print(userPokemons)
     return render(request, 'pokemons/dashboard.html', {'user_pokemons':userPokemons})
@@ -77,3 +77,12 @@ def addPokemon(request):
             m,created = UserPokemon.objects.update_or_create(user=user, pokemon=pokemon)
             m.save()
     return JsonResponse(data)
+    
+def updatePokemon(request):
+    pokemon_id = request.GET.get('pokemon_id')
+    user_id = request.GET.get('user_id')
+    pokemon = Pokemon.objects.get(id=pokemon_id)
+    user = User.objects.get(id=user_id)
+    userPokemons =UserPokemon.objects.filter(user=user, pokemon=pokemon).delete()
+    pokemonList = UserPokemon.objects.filter(user=user)
+    return render(request, 'pokemons/dashboard_table.html', {'user_pokemons':pokemonList})
