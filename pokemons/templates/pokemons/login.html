@@ -3,12 +3,12 @@
 {% load tailwind_filters %}
 {% block content %}
 <main class="pt-36">
-    <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+    <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center">
         <form method="post" class="bg-white px-6 py-8 rounded shadow-md font-semibold text-gray-500 w-full">
             <h1 class="mb-8 text-3xl font-bold text-center">Login</h1>
             {% csrf_token %}
             {{ form|crispy }}
-            <button type="submit" class="w-full py-3 rounded bg-red-500 text-white hover:bg-red-600 focus:outline-none my-1">Sign up</button>
+            <button type="submit" class="w-full p-2 rounded bg-red-500 text-white hover:bg-red-600 focus:outline-none">Sign up</button>
         </form>    
     </div>
 </main>
