@@ -1,28 +1,28 @@
 {% for pokemon in user_pokemons %}
 <tr>
-    <td class="px-6 py-4 whitespace-nowrap">
+    <td class="px-6 py-4">
     <div class="flex items-center">
         <div class="flex-shrink-0 w-20">
         <img class="w-20 relative" src="{{pokemon.pokemon.default_front_sprite_url}}">
         </div>
         <div class="ml-4">
-            <div class="text-lg font-medium text-gray-900 text-poke-{{pokemon.pokemon.type.first}}">
+            <a href="{% url 'details' pokemon.pokemon.id %}" class="text-lg font-medium text-gray-900 text-poke-{{pokemon.pokemon.type.first}}">
                 {{pokemon.pokemon.name}}
-            </div>
+            </a>
         </div>
     </div>
     </td>
-    <td class="px-6 py-4 whitespace-nowrap">
+    <td class="px-6 py-4 ">
     <div class="text-sm text-gray-900 font-semibold text-poke-{{pokemon.pokemon.type.first}}">{{pokemon.pokemon.type.first}}</div>
     {% if pokemon.pokemon.type.count > 1 %}
     <div class="text-sm text-gray-900 font-semibold text-poke-{{pokemon.pokemon.type.last}}">{{pokemon.pokemon.type.last}}</div>
     {% endif %}
     </td>
-    <td class="px-6 py-4 whitespace-nowrap">
-        <span class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{pokemon.pokemon.height}}</span>
+    <td class="px-6 py-4 ">
+        <span class="px-6 py-4  text-sm text-gray-800">{{pokemon.pokemon.height}}</span>
     </td>
-    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{pokemon.pokemon.weight}}</td>
-    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+    <td class="px-6 py-4 text-sm text-gray-800">{{pokemon.pokemon.weight}}</td>
+    <td class="px-6 py-4 text-right text-sm font-medium">
         <button onclick="deletePokemon('{{pokemon.pokemon.id}}')" class="text-red-600 font-semibold hover:text-red-900">Delete</button>
     </td>
 </tr>
