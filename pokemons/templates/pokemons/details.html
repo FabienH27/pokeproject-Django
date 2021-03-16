@@ -16,58 +16,74 @@
 </head>
     <body>
         {% block content %}
-        <main class="h-screen bg-gray-200 bg-poke-{{pokemon.type.first}}-light">
-            <div class="md:flex justify-around bg-poke-{{pokemon.type.first}} py-16 text-white">
-                <div class="max-h-full flex items-center">
-                    <div class="text-center mx-auto">
-                        <h1 class="text-5xl font-extrabold capitalize md:text-7xl">{{ pokemon.name }}</h1>
-                        <div class="flex justify-around pt-5 text-center w-56 mx-auto">
-                            <h5 class="bg-white rounded-full text-poke-{{pokemon.type.first}} font-bold py-2 px-5">{{pokemon.type.first}}</h5>
-                            {% if pokemon.type.count > 1 %}
-                            <h5 class="bg-white rounded-full text-poke-{{pokemon.type.first}} font-bold py-2 px-5">{{pokemon.type.last}}</h5>
-                            {% endif %}
-                        </div>
-                        <div class="flex justify-around pt-5 text-center w-56 mx-auto">
-                            <div>
-                                <h2 class="text-3xl">{{pokemon.height}}</h2>
-                                <h4 class="font-bold">Height</h4>
+        <main class="bg-gray-200 bg-poke-{{pokemon.type.first}}-light max-w-full">
+            <div class="max-w-xl mx-auto" id="snackbar">
+                <div class="text-white px-6 py-4 border-0 rounded relative mb-4 bg-green-500" id="success">
+                    <span class="inline-block align-middle mr-8 w-56" id="successMessage">
+                        Pokemon has been successfully added to your pokedex !
+                    </span>
+                    <button id="close-btn" class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none">
+                        <span>×</span>
+                    </button>
+                </div>
+            </div>
+            <div class="bg-poke-{{pokemon.type.first}} text-white">
+                {% if request.user.username  %}
+                <button type="button" class="float-right mx-5 my-2 rounded-full px-4 py-2  bg-white text-poke-{{pokemon.type.first}} 
+                font-bold hover:bg-poke-{{pokemon.type.first}}-light focus:outline-none" onclick="addPokemon('{{pokemon.id}}')">Add to my pokedex</button>
+                {% endif %}
+                <div class="md:flex justify-around py-16">
+                    <div class="max-h-full flex items-center">
+                        <div class="text-center mx-auto">
+                            <h1 class="text-5xl font-extrabold capitalize md:text-7xl">{{ pokemon.name }}</h1>
+                            <div class="flex justify-around pt-5 text-center w-56 mx-auto">
+                                <h5 class="bg-white rounded-full text-poke-{{pokemon.type.first}} font-bold py-2 px-5">{{pokemon.type.first}}</h5>
+                                {% if pokemon.type.count > 1 %}
+                                <h5 class="bg-white rounded-full text-poke-{{pokemon.type.first}} font-bold py-2 px-5">{{pokemon.type.last}}</h5>
+                                {% endif %}
                             </div>
-                            <div>
-                                <h2 class="text-3xl">{{pokemon.weight}}</h2>
-                                <h4 class="font-bold">Weight</h4>
+                            <div class="flex justify-around pt-5 text-center w-56 mx-auto">
+                                <div>
+                                    <h2 class="text-3xl">{{pokemon.height}}</h2>
+                                    <h4 class="font-bold">Height</h4>
+                                </div>
+                                <div>
+                                    <h2 class="text-3xl">{{pokemon.weight}}</h2>
+                                    <h4 class="font-bold">Weight</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div>
-                    <div class="swiper-container">
-                        <div class="swiper-wrapper">
-                          <div class="swiper-slide justify-center flex content-center">
-                            <div>
-                                <img src="{{pokemon.default_front_sprite_url}}" width="200px">
-                                <h6 class="text-center uppercase font-semibold">front</h6>
+                    <div>
+                        <div class="swiper-container max-w-full">
+                            <div class="swiper-wrapper">
+                              <div class="swiper-slide justify-center flex content-center">
+                                <div>
+                                    <img src="{{pokemon.default_front_sprite_url}}" width="200px">
+                                    <h6 class="text-center uppercase font-semibold">front</h6>
+                                </div>
+                              </div>
+                              <div class="swiper-slide justify-center flex content-center">
+                                <div>
+                                    <img src="{{pokemon.default_back_sprite_url}}" width="200px">
+                                    <h6 class="text-center uppercase font-semibold">back</h6>
+                                </div>
+                              </div>
+                              <div class="swiper-slide justify-center flex content-center">
+                                <div>
+                                    <img src="{{pokemon.front_shiny_sprite_url}}" width="200px">
+                                    <h6 class="text-center uppercase font-semibold">shiny</h6>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                          <div class="swiper-slide justify-center flex content-center">
-                            <div>
-                                <img src="{{pokemon.default_back_sprite_url}}" width="200px">
-                                <h6 class="text-center uppercase font-semibold">back</h6>
-                            </div>
-                          </div>
-                          <div class="swiper-slide justify-center flex content-center">
-                            <div>
-                                <img src="{{pokemon.front_shiny_sprite_url}}" width="200px">
-                                <h6 class="text-center uppercase font-semibold">shiny</h6>
-                            </div>
-                          </div>
+                            <!-- Add Arrows -->
+                            <div class="swiper-button-next focus:outline-none"></div>
+                            <div class="swiper-button-prev focus:outline-none"></div>
                         </div>
-                        <!-- Add Arrows -->
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
                     </div>
                 </div>
             </div>
-            <div class="container mx-auto my-16">
+            <div class="container mx-auto py-36">
                 <table class="table mx-auto ">
                     <thead>
                         <tr>
@@ -102,7 +118,37 @@
                 prevEl: '.swiper-button-prev',
               },
             });
-          </script>
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript">
+            function addPokemon(poke_id){
+                $.ajax({
+                    url: "{% url 'addPokemon' %}",
+                    data:{
+                        pokemon_id: poke_id,
+                        user_id: '{{request.user.id}}',
+                    },
+                    success: function(data){
+                        if (data.exists == true){
+                            $("#success").removeClass("bg-green-500").addClass("bg-red-500");
+                            document.getElementById("successMessage").innerHTML = "This pokemon has already been added to your pokedex !";
+                        }else{
+                            $("#success").removeClass("bg-red-500").addClass("bg-green-500");
+                            document.getElementById("successMessage").innerHTML = "Pokemon has been successfully added to your pokedex !";				
+                        }
+                        // Get the snackbar DIV
+                        var x = document.getElementById("snackbar");
+                        // Add the "show" class to DIV
+                        x.className = "show";
+                        // After 3 seconds, remove the show class from DIV
+                        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                    }
+                });
+            }
+            $("#close-btn").click(function() {
+                    $(this).parent().fadeOut(500);
+            })
+        </script>
         {% endblock %}
     </body>
 </html>
