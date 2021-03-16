@@ -8,8 +8,8 @@
 				<span class="inline-block align-middle mr-8" id="successMessage">
 					Pokemon has been successfully added to your pokedex !
 				</span>
-				<button class="absolute bg-transparent text-2xl font-semibold right-0 top-0 mt-4 mr-6 outline-none focus:outline-none">
-				  <span>×</span>
+				<button id="close-btn" class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none">
+					<span>×</span>
 				</button>
 			</div>
 		</div>
@@ -112,5 +112,8 @@
 			}
 		});
 	}
+	$("#close-btn").click(function() {
+            $(this).parent().fadeOut(500);
+	})
 </script>
 {% endblock %}
