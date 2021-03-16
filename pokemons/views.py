@@ -15,7 +15,7 @@ def index(request):
     return render(request,'pokemons/index.html/', {'user': user})
 
 def listing(request):
-    pokemons = Pokemon.objects.all()
+    pokemons = Pokemon.objects.all().order_by('id')
     paginator = Paginator(pokemons,30)
 
     page_number = request.GET.get('page')
