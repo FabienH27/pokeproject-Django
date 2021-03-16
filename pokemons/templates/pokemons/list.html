@@ -87,7 +87,7 @@
 	</div>
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+<script type="text/javascript">
 	function addPokemon(poke_id){
 		$.ajax({
 			url: "{% url 'addPokemon' %}",
@@ -113,7 +113,7 @@
 		});
 	}
 	$("#close-btn").click(function() {
-            $(this).parent().fadeOut(500);
+			$(this).parent().fadeOut(500);
 	})
 </script>
 {% endblock %}
