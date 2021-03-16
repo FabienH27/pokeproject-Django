@@ -1,6 +1,5 @@
 from django.db import models
-from django.core import serializers
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
@@ -8,13 +7,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Pokemon, PokemonStat, UserPokemon
+
 from .forms import RegisterForm
 
 def index(request):
     user = request.user
     return render(request,'pokemons/index.html/', {'user': user})
 
-def list(request):
+def listing(request):
     pokemons = Pokemon.objects.all()
     paginator = Paginator(pokemons,30)
 
@@ -86,3 +86,4 @@ def updatePokemon(request):
     userPokemons =UserPokemon.objects.filter(user=user, pokemon=pokemon).delete()
     pokemonList = UserPokemon.objects.filter(user=user)
     return render(request, 'pokemons/dashboard_table.html', {'user_pokemons':pokemonList})
+
