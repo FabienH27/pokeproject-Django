@@ -87,3 +87,6 @@ def updatePokemon(request):
     pokemonList = UserPokemon.objects.filter(user=user)
     return render(request, 'pokemons/dashboard_table.html', {'user_pokemons':pokemonList})
 
+def searchPokemon(request):
+    data = list(Pokemon.objects.filter(name__istartswith=request.GET.get('term')).values('id','name','default_front_sprite_url'))
+    return JsonResponse(data,safe=False)

@@ -7,13 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+    <style type="text/css">
+    .ui-autocomplete {
+        position: absolute;
+        top: 0;
+        left: 0;
+        cursor:default;
+        background-color:white;
+    }
+    </style>
     {% block links %}
     <title>Pokeproject</title>
     {% endblock %}
 </head>
     <body class="bg-gray-200 h-screen">
         <header class="bg-white py-2">
-            <div x-data="{ open: false }" class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-around md:flex-row md:px-6">
+            <div x-data="{ open: false }" class="flex flex-col max-w-screen-xl px-4 mx-auto lg:items-center lg:justify-around lg:flex-row lg:px-6">
                 <div class="flex flex-row items-center justify-between">
                     <a href="{% url 'index' %}">
                         <div class="flex flex-row justify-around items-center">
@@ -21,14 +30,27 @@
                             <h1 class="px-5 font-semibold text-lg uppercase tracking-widest text-red-500">Pokeproject</h1>
                         </div>
                     </a>
-                    <button class="md:hidden rounded-lg focus:outline-none focus:shadow-outline" @click="open = !open">
+                    <button class="lg:hidden rounded-lg focus:outline-none focus:shadow-outline" @click="open = !open">
                         <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
                           <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                           <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                         </svg>
                     </button>
                 </div>
-                <div :class="{'flex': open, 'hidden': !open}"  class="flex-col flex-grow pb-4 md:pb-0 hidden md:flex justify-between md:justify-end md:flex-row">
+                <div :class="{'flex': open, 'hidden': !open}"  class="flex-col flex-grow pb-4 lg:pb-0 hidden lg:flex justify-between lg:justify-end lg:flex-row items-center">
+                    <div class="pt-2 relative text-gray-600">
+                        <input class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none focus:border-indigo-500"
+                            type="search" name="search" placeholder="Search a pokemon" id="search">
+                        <button type="submit" class="absolute right-0 top-0 mt-5 mr-4 focus:outline-none" id="searchButton">
+                          <svg class="text-gray-600 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
+                            viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve"
+                            width="512px" height="512px">
+                            <path
+                              d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+                          </svg>
+                        </button>
+                    </div>
                     <a href="{% url 'index' %}"><h1 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Home</h1></a>
                     <a href="{% url 'list' %}"><h2 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">List</h2></a>
                     {% if not request.user.username %}
@@ -38,6 +60,7 @@
                     <a href="{% url 'dashboard' %}"><h2 class="px-5 py-2 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Dashboard</h2></a>
                     <p class="text-gray-500 font-semibold h-full my-auto md:border-l-2 border-gray-500 px-5 ">{{request.user.username}}</p>
                     <a href="{% url 'logout' %}"><h2 class="px-5 py-2 font-semibold text-gray-500 hover:text-gray-900 hover:bg-gray-200 rounded-lg">Log out</h2></a>
+                    
                     {% endif %}
                 </div>
             </div>
@@ -45,5 +68,30 @@
         {% block content %}
         {% endblock %}
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"> </script> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){ 
+                $("#search").autocomplete({
+                    source: "{% url 'searchPokemon' %}",
+                    minLength:2,
+                    select: function(event,ui){
+                        $("#search").val(ui.item.name);
+                        window.location.href =  "{% url 'details' 1 %}".replace('1',ui.item.id);
+                        return false;
+                    },
+                    focus:function(event,ui){
+                        $("#search").val(ui.item.name);      
+                        return false;                 
+                    }
+                }).data("autocomplete")._renderItem = function(ul, item) {
+                    return $("<li class='flex justify-start hover:bg-indigo-200'></li>")
+                        .data("item.autocomplete", item)
+                        .append("<img class='w-16' src=" + item.default_front_sprite_url + " alt=pokemon image />")
+                        .append("<a class='text-xl text-gray-700 flex items-center'><strong>" + item.name + "</strong></a>")
+                        .appendTo(ul);
+                };
+            });
+        </script>
     </body>
 </html>
