@@ -68,3 +68,12 @@ class UserPokemon(models.Model):
         db_table = 'user_pokemons'
     def __str__(self):
         return self.pokemon.name
+
+class PokemonEvolution(models.Model):
+    pokemon = models.ForeignKey(Pokemon,on_delete=models.CASCADE,related_name='pokemon')
+    pokemonEvolution1 = models.ForeignKey(Pokemon,on_delete=models.CASCADE,blank = True,null = True,related_name='evolution1')
+    pokemonEvolution2 = models.ForeignKey(Pokemon,on_delete=models.CASCADE,blank = True,null = True,related_name='evolution2')
+    class Meta:
+        db_table = 'pokemon_evolutions'
+    def __str__(self):
+        return self.pokemon.name
