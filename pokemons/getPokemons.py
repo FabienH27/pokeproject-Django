@@ -1,6 +1,6 @@
 import sys
 from typing import Type
-sys.path.append('D:/Django/pokeproject')
+sys.path.append('D:/Django/pokeproject-Django')
 
 import os
 import django
@@ -37,7 +37,7 @@ def updatePokemon(pokemondata):
         default_back_sprite_url = pokemondata['sprites']['back_default'],
         pokedex_number = pokemondata['id']
     )
-    #p.save()
+    p.save()
     return p
 
 def updateType(typedata, pokemonData):
@@ -59,19 +59,63 @@ def updateStats(statdata, pokemonData):
         stat.pokemons.add(pokemonData,through_defaults={'value':statdata[i]['base_stat']})
     stat.save()
 
-print('-----------Génération 1-------------')
-loadGeneration(1,151)
-print('-----------Génération 2-------------')
-loadGeneration(152, 251)
-print('-----------Génération 3-------------')
-loadGeneration(252, 386)
-print('-----------Génération 4-------------')
-loadGeneration(389,493)
-print('-----------Génération 5-------------')
-loadGeneration(494, 649)
-print('-----------Génération 6-------------')
-loadGeneration(650, 721)
-print('-----------Génération 7-------------')
-loadGeneration(722, 809)
-print('-----------Génération 8-------------')
-loadGeneration(810, 899)
+def loadEvolutions(xMin, xMax):
+    url = "https://pokeapi.co/api/v2/evolution-chain/"
+    evolution1 = None
+    evolution2 = None
+    for i in range(xMin, xMax):
+        print("loading evolution chain n°" + str(i))
+        chain = url + str(i)
+        response = requests.get(chain)
+        if(response.status_code == 200):
+            data = json.loads(response.text)
+            try:
+                pokemonBase = Pokemon.objects.get(name=data['chain']['species']['name'])
+            except Pokemon.DoesNotExist:
+                pokemonBase = None
+            print(pokemonBase)
+            if(pokemonBase is not None):
+                for i in range(len(data['chain']['evolves_to'])):
+                    try:
+                        evolution1 = Pokemon.objects.get(name=data['chain']['evolves_to'][i]['species']['name'])
+                    except Pokemon.DoesNotExist:
+                        evolution1 = None
+                    print(evolution1)
+                    if(evolution1 is not None):
+                        for j in range(len(data['chain']['evolves_to'][i]['evolves_to'])):
+                            try:
+                                evolution2 =  Pokemon.objects.get(name=data['chain']['evolves_to'][i]['evolves_to'][j]['species']['name'])
+                            except Pokemon.DoesNotExist:
+                                evolution2 = None
+                            print(evolution2)
+                            if(evolution2 is not None):
+                                chain,created = PokemonEvolution.objects.update_or_create(
+                                    pokemon=pokemonBase,
+                                    pokemonEvolution1=evolution1,
+                                    pokemonEvolution2=evolution2
+                                )
+                                chain.save()
+            
+#Name = evolutionData['chain']['species']['name']
+#evolution1 = evolutionData['chain']['evolves_to'][0]['species']['name']
+#evolution2 = evolutionData['chain']['evolves_to'][0]['evolves_to'][0]['species']['name']
+
+#print('-----------Evolutions-------------')
+#loadEvolutions(1,476)
+
+#print('-----------Génération 1-------------')
+#loadGeneration(1,152)
+#print('-----------Génération 2-------------')
+#loadGeneration(152, 252)
+#print('-----------Génération 3-------------')
+#loadGeneration(252, 389)
+#print('-----------Génération 4-------------')
+#loadGeneration(389,494)
+#print('-----------Génération 5-------------')
+#loadGeneration(494, 650)
+#print('-----------Génération 6-------------')
+#loadGeneration(650, 722)
+#print('-----------Génération 7-------------')
+#loadGeneration(722, 810)
+#print('-----------Génération 8-------------')
+#loadGeneration(810, 899)
