@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container mx-auto py-36">
+            <div class="container mx-auto pt-36">
                 <table class="table mx-auto ">
                     <thead>
                         <tr>
@@ -101,6 +101,46 @@
                     </tbody>
                 </table>
             </div>
+            <div class="container mx-auto py-36">
+                {% if pokemonBase or pokemonEvolution1 or pokemonEvolution2 %}
+                    <h1 class="uppercase tracking-widest text-3xl text-poke-{{pokemon.type.first}} font-semibold text-center">Evolutions</h1>
+                    {% if pokemonBase %}
+                    <a href="{% url 'details' pokemonBase.0.2 %}">
+                        <h1 class="uppercase tracking-widest text-xl text-gray-500 mt-5 font-semibold text-center">Base pokemon</h1>
+                        <img class="mx-auto" src="{{pokemonBase.0.1}}" width="200px">
+                        <h1 class="text-xl my-5 font-semibold text-center">{{pokemonBase.0.0}}</h1> 
+                    </a>
+                    {% endif %}
+                    {% if pokemonEvolution1 %}
+                        <h1 class="uppercase tracking-widest text-xl text-gray-500 mt-5 font-semibold text-center">Pokemon Gen I</h1>
+                        <div class="flex justify-center">
+                        {% for evolution1 in pokemonEvolution1 %}
+                            <div>
+                                <a href="{% url 'details' evolution1.2 %}">
+                                    <img class="mx-auto" src="{{evolution1.1}}" width="200px">
+                                    <h1 class="text-xl my-5 font-semibold text-center">{{evolution1.0}}</h1> 
+                                </a>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if pokemonEvolution2 %}
+                        <h1 class="uppercase tracking-widest text-xl text-gray-500 mt-5 font-semibold text-center">Pokemon Gen II</h1>
+                        <div class="flex justify-center">
+                        {% for evolution2 in pokemonEvolution2 %}
+                            <div>
+                                <a href="{% url 'details' evolution2.2 %}">
+                                    <img class="mx-auto" src="{{evolution2.1}}" width="200px">
+                                    <h1 class="text-xl my-5 font-semibold text-center">{{evolution2.0}}</h1> 
+                                </a>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+
         </main>
         <script src="https://unpkg.com/swiper/swiper-bundle.js" type="text/javascript"></script>
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js" type="text/javascript"></script>

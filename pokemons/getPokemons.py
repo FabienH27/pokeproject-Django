@@ -61,8 +61,9 @@ def updateStats(statdata, pokemonData):
 
 def loadEvolutions(xMin, xMax):
     url = "https://pokeapi.co/api/v2/evolution-chain/"
-    evolution1 = None
-    evolution2 = None
+    pokemonEvolution1 = None
+    pokemonEvolution2 = None
+    pokemonEvolution2Bis = None
     for i in range(xMin, xMax):
         print("loading evolution chain n°" + str(i))
         chain = url + str(i)
@@ -73,35 +74,52 @@ def loadEvolutions(xMin, xMax):
                 pokemonBase = Pokemon.objects.get(name=data['chain']['species']['name'])
             except Pokemon.DoesNotExist:
                 pokemonBase = None
-            print(pokemonBase)
             if(pokemonBase is not None):
                 for i in range(len(data['chain']['evolves_to'])):
                     try:
-                        evolution1 = Pokemon.objects.get(name=data['chain']['evolves_to'][i]['species']['name'])
+                        pokemonEvolution1 = Pokemon.objects.get(name=data['chain']['evolves_to'][i]['species']['name'])
                     except Pokemon.DoesNotExist:
-                        evolution1 = None
-                    print(evolution1)
-                    if(evolution1 is not None):
-                        for j in range(len(data['chain']['evolves_to'][i]['evolves_to'])):
-                            try:
-                                evolution2 =  Pokemon.objects.get(name=data['chain']['evolves_to'][i]['evolves_to'][j]['species']['name'])
-                            except Pokemon.DoesNotExist:
-                                evolution2 = None
-                            print(evolution2)
-                            if(evolution2 is not None):
+                        pokemonEvolution1 = None
+                    if pokemonEvolution1 is not None:
+                        if len(data['chain']['evolves_to'][i]['evolves_to']) > 0:
+                            #si le pokemon a une évolution de niveau 2
+                            if len(data['chain']['evolves_to'][i]['evolves_to']) > 1:
+                                for j in range(len(data['chain']['evolves_to'][i]['evolves_to'])):
+                                    try:
+                                        pokemonEvolution2 = Pokemon.objects.get(name=data['chain']['evolves_to'][i]['evolves_to'][j]['species']['name'])
+                                    except Pokemon.DoesNotExist:
+                                        pokemonEvolution2 = None
+                                    chain,created = PokemonEvolution.objects.update_or_create(
+                                        pokemon=pokemonBase,
+                                        pokemonEvolution1=pokemonEvolution1,
+                                        pokemonEvolution2=pokemonEvolution2
+                                    )
+                                    chain.save()  
+                            else:
+                                try:
+                                    pokemonEvolution2 = Pokemon.objects.get(name=data['chain']['evolves_to'][i]['evolves_to'][0]['species']['name'])
+                                except Pokemon.DoesNotExist:
+                                    pokemonEvolution2 = None
                                 chain,created = PokemonEvolution.objects.update_or_create(
                                     pokemon=pokemonBase,
-                                    pokemonEvolution1=evolution1,
-                                    pokemonEvolution2=evolution2
+                                    pokemonEvolution1=pokemonEvolution1,
+                                    pokemonEvolution2=pokemonEvolution2
                                 )
-                                chain.save()
+                                chain.save()  
+                        else:
+                            #Si le pokemon n'a pas d'évolution de niveau 2
+                            chain,created = PokemonEvolution.objects.update_or_create(
+                                pokemon=pokemonBase,
+                                pokemonEvolution1=pokemonEvolution1
+                            )
+                            chain.save()   
             
 #Name = evolutionData['chain']['species']['name']
 #evolution1 = evolutionData['chain']['evolves_to'][0]['species']['name']
 #evolution2 = evolutionData['chain']['evolves_to'][0]['evolves_to'][0]['species']['name']
 
 #print('-----------Evolutions-------------')
-#loadEvolutions(1,476)
+loadEvolutions(1,476)
 
 #print('-----------Génération 1-------------')
 #loadGeneration(1,152)
