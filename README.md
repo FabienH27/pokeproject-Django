@@ -1,5 +1,7 @@
 # PokeProject
 
+![Python](https://forthebadge.com/images/badges/made-with-python.svg)
+
 A personal project to learn Python & Django.
 
 Live demo : https://pokeproject-django.herokuapp.com/
@@ -21,3 +23,11 @@ Live demo : https://pokeproject-django.herokuapp.com/
 
 - Run the command : `py manage.py runserver`
 - Go to http://127.0.0.1:8000/pokemons/
+
+### Author
+
+Fabien Hannon
+
+### License
+
+Licensed under the GPL License
