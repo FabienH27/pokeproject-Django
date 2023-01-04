@@ -4,8 +4,6 @@
 
 A personal project to learn Python & Django.
 
-Live demo : https://pokeproject-django.herokuapp.com/
-
 ## Configuration
 
 - In the pokeproject folder : copy `.env.example` file to `.env` 

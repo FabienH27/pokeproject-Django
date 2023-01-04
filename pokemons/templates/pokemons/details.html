@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" type="text/css"/>
     <title>Pokemon - {{pokemon.name}}</title>
     <style>
-        .swiper-container {
+        .swiper {
             width: 400px;
         }
         .swiper-button-next, .swiper-button-prev{
@@ -32,7 +32,7 @@
                 <button type="button" class="float-right mx-5 my-2 rounded-full px-4 py-2  bg-white text-poke-{{pokemon.type.first}} 
                 font-bold hover:bg-poke-{{pokemon.type.first}}-light focus:outline-none" onclick="addPokemon('{{pokemon.id}}')">Add to my pokedex</button>
                 {% endif %}
-                <div class="md:flex justify-around py-16">
+                <div class="py-16">
                     <div class="max-h-full flex items-center">
                         <div class="text-center mx-auto">
                             <h1 class="text-5xl font-extrabold capitalize md:text-7xl">{{ pokemon.name }}</h1>
@@ -54,24 +54,24 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div class="swiper-container max-w-full">
+                    <div class="swiper">
+                        <div class="swiper-container">
                             <div class="swiper-wrapper">
                               <div class="swiper-slide justify-center flex content-center">
                                 <div>
-                                    <img src="{{pokemon.default_front_sprite_url}}" width="200px">
+                                    <img class="mx-auto" src="{{pokemon.default_front_sprite_url}}" width="200px">
                                     <h6 class="text-center uppercase font-semibold">front</h6>
                                 </div>
                               </div>
                               <div class="swiper-slide justify-center flex content-center">
                                 <div>
-                                    <img src="{{pokemon.default_back_sprite_url}}" width="200px">
+                                    <img class="mx-auto" src="{{pokemon.default_back_sprite_url}}" width="200px">
                                     <h6 class="text-center uppercase font-semibold">back</h6>
                                 </div>
                               </div>
                               <div class="swiper-slide justify-center flex content-center">
                                 <div>
-                                    <img src="{{pokemon.front_shiny_sprite_url}}" width="200px">
+                                    <img class="mx-auto" src="{{pokemon.front_shiny_sprite_url}}" width="200px">
                                     <h6 class="text-center uppercase font-semibold">shiny</h6>
                                 </div>
                               </div>

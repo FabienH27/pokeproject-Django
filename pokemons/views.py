@@ -63,10 +63,6 @@ def details(request,pokemon_id):
         pokemonEvolution1List = list(dict.fromkeys(pokemonEvolution1List))
         pokemonEvolution2List = list(dict.fromkeys(pokemonEvolution2List))
 
-    print(pokemonBase)
-    print(pokemonEvolution1List)
-    print(pokemonEvolution2List)
-
     return render(request,'pokemons/details.html',{'pokemon':pokemonData, 'stats':dataStats,'pokemonBase':pokemonBase,'pokemonEvolution1':pokemonEvolution1List,'pokemonEvolution2':pokemonEvolution2List})
 
 def register(request):

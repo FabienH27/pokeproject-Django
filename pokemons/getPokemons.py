@@ -1,6 +1,6 @@
 import sys
 from typing import Type
-sys.path.append('D:/Django/pokeproject-Django')
+sys.path.append('C:/Users/fhann/Documents/Projects/pokeproject-Django')
 
 import os
 import django
@@ -20,7 +20,7 @@ def loadGeneration(xMin, xMax):
     for i in range(xMin, xMax):
         pokemon = url + str(i)
         response = requests.get(pokemon)
-        if(response.status_code == 200):        
+        if(response.status_code == 200):
             pokemondata = json.loads(response.text)
             pokemon = updatePokemon(pokemondata)
             updateType(pokemondata['types'],pokemon)
@@ -118,22 +118,22 @@ def loadEvolutions(xMin, xMax):
 #evolution1 = evolutionData['chain']['evolves_to'][0]['species']['name']
 #evolution2 = evolutionData['chain']['evolves_to'][0]['evolves_to'][0]['species']['name']
 
-#print('-----------Evolutions-------------')
+print('-----------Evolutions-------------')
 loadEvolutions(1,476)
 
-#print('-----------Génération 1-------------')
-#loadGeneration(1,152)
-#print('-----------Génération 2-------------')
-#loadGeneration(152, 252)
-#print('-----------Génération 3-------------')
-#loadGeneration(252, 389)
-#print('-----------Génération 4-------------')
-#loadGeneration(389,494)
-#print('-----------Génération 5-------------')
-#loadGeneration(494, 650)
-#print('-----------Génération 6-------------')
-#loadGeneration(650, 722)
-#print('-----------Génération 7-------------')
-#loadGeneration(722, 810)
-#print('-----------Génération 8-------------')
-#loadGeneration(810, 899)
+# print('-----------Génération 1-------------')
+# loadGeneration(1,152)
+# print('-----------Génération 2-------------')
+# loadGeneration(152, 252)
+# print('-----------Génération 3-------------')
+# loadGeneration(252, 389)
+# print('-----------Génération 4-------------')
+# loadGeneration(389,494)
+# print('-----------Génération 5-------------')
+# loadGeneration(494, 650)
+# print('-----------Génération 6-------------')
+# loadGeneration(650, 722)
+# print('-----------Génération 7-------------')
+# loadGeneration(722, 810)
+# print('-----------Génération 8-------------')
+# loadGeneration(810, 899)
