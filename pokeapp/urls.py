@@ -1,6 +1,12 @@
 from django.urls import path
+from django.core.management import call_command
+from django.http import HttpResponse
 
 from . import views
+
+def run_script(request):
+    call_command('populate_db')
+    return HttpResponse("Script executed")
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -13,4 +19,5 @@ urlpatterns = [
     path('addPokemon',views.addPokemon, name='addPokemon'),
     path('updatePokemon', views.updatePokemon, name='updatePokemon'),
     path('searchPokemon', views.searchPokemon, name='searchPokemon'),
+    path('run-script/', run_script)
 ]

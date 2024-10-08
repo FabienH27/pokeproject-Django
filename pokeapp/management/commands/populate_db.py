@@ -1,7 +1,7 @@
+from django.core.management.base import BaseCommand
 import sys
 from typing import Type
 sys.path.append('/code')
-
 
 import os
 import django
@@ -15,7 +15,6 @@ from pokeapp.models import *
 import requests, json
 
 
-#Récupération des données depuis l'API
 def loadGeneration(xMin, xMax):
     url = 'http://pokeapi.co/api/v2/pokemon/'
     for i in range(xMin, xMax):
@@ -114,22 +113,11 @@ def loadEvolutions(xMin, xMax):
                             )
                             chain.save()   
 
-print('-----------Génération 1-------------')
-loadGeneration(1,152)
-print('-----------Génération 2-------------')
-loadGeneration(152, 252)
-print('-----------Génération 3-------------')
-loadGeneration(252, 389)
-print('-----------Génération 4-------------')
-loadGeneration(389,494)
-print('-----------Génération 5-------------')
-loadGeneration(494, 650)
-print('-----------Génération 6-------------')
-loadGeneration(650, 722)
-print('-----------Génération 7-------------')
-loadGeneration(722, 810)
-print('-----------Génération 8-------------')
-loadGeneration(810, 899)
+class Command(BaseCommand):
+    help = 'Populate SQLite database with default data'
 
-print('-----------Evolutions-------------')
-loadEvolutions(1,476)
+    def handle(self, *args, **kwargs):
+        print('-----------Génération 1-------------')
+        loadGeneration(1,152)
+        print('-----------Génération 2-------------')
+        loadGeneration(152, 252)

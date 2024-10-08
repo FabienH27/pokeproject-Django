@@ -14,9 +14,12 @@ RUN pip install -r requirements.txt;
 # Copy the entire project to the working directory
 COPY . /code/
 
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 EXPOSE 8080
 
 # Set the entrypoint to the script
-# ENTRYPOINT ["/entrypoint.sh"]
+RUN /entrypoint.sh
 
 CMD [ "python", "manage.py", "runserver", "0.0.0.0:8080" ]
