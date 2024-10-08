@@ -24,9 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(6(q(ry%4nlys$um4p2!kg4g!#!wdilwijre1(5-icq!cnao06'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
+    'localhost',
     'pokeproject-django-215101547753.us-central1.run.app'
 ]
 

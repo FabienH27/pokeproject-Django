@@ -29,7 +29,7 @@ docker build -t pokeproject .
 ```
 
 ```sh
-docker-compose exec web python manage.py migrate
+docker run -d -p 8080:8080 --name pokeproject pokeproject
 ```
 
 ### Author
