@@ -91,9 +91,9 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('/pokemons')
+    return redirect('/')
 
-@login_required(login_url='/pokemons/login')
+@login_required(login_url='/login')
 def dashboard(request):
     userPokemons = UserPokemon.objects.filter(user=request.user)
     print(userPokemons)
