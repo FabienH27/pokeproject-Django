@@ -25,7 +25,7 @@ A personal project to learn Python & Django.
 ### Useful commands
 
 ```sh
-docker-compose exec web python manage.py makemigrations
+docker build -t pokeproject .
 ```
 
 ```sh
