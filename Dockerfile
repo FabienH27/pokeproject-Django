@@ -14,6 +14,8 @@ RUN pip install -r requirements.txt;
 # Copy the entire project to the working directory
 COPY . /code/
 
+EXPOSE 8080
+
 # Copy the entrypoint script and make it executable
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
