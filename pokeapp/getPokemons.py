@@ -1,6 +1,7 @@
 import sys
 from typing import Type
-sys.path.append('C:/Users/fhann/Documents/Projects/pokeproject-Django')
+sys.path.append('/code')
+
 
 import os
 import django
@@ -9,8 +10,8 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'pokeproject.settings'
 
 django.setup()
 
-from pokemons import models
-from pokemons.models import *
+from pokeapp import models
+from pokeapp.models import *
 import requests, json
 
 
@@ -62,8 +63,7 @@ def updateStats(statdata, pokemonData):
 def loadEvolutions(xMin, xMax):
     url = "https://pokeapi.co/api/v2/evolution-chain/"
     pokemonEvolution1 = None
-    pokemonEvolution2 = None
-    pokemonEvolution2Bis = None
+    pokemonEvolution2 = None    
     for i in range(xMin, xMax):
         print("loading evolution chain n°" + str(i))
         chain = url + str(i)
@@ -113,27 +113,23 @@ def loadEvolutions(xMin, xMax):
                                 pokemonEvolution1=pokemonEvolution1
                             )
                             chain.save()   
-            
-#Name = evolutionData['chain']['species']['name']
-#evolution1 = evolutionData['chain']['evolves_to'][0]['species']['name']
-#evolution2 = evolutionData['chain']['evolves_to'][0]['evolves_to'][0]['species']['name']
+
+print('-----------Génération 1-------------')
+loadGeneration(1,152)
+print('-----------Génération 2-------------')
+loadGeneration(152, 252)
+print('-----------Génération 3-------------')
+loadGeneration(252, 389)
+print('-----------Génération 4-------------')
+loadGeneration(389,494)
+print('-----------Génération 5-------------')
+loadGeneration(494, 650)
+print('-----------Génération 6-------------')
+loadGeneration(650, 722)
+print('-----------Génération 7-------------')
+loadGeneration(722, 810)
+print('-----------Génération 8-------------')
+loadGeneration(810, 899)
 
 print('-----------Evolutions-------------')
 loadEvolutions(1,476)
-
-# print('-----------Génération 1-------------')
-# loadGeneration(1,152)
-# print('-----------Génération 2-------------')
-# loadGeneration(152, 252)
-# print('-----------Génération 3-------------')
-# loadGeneration(252, 389)
-# print('-----------Génération 4-------------')
-# loadGeneration(389,494)
-# print('-----------Génération 5-------------')
-# loadGeneration(494, 650)
-# print('-----------Génération 6-------------')
-# loadGeneration(650, 722)
-# print('-----------Génération 7-------------')
-# loadGeneration(722, 810)
-# print('-----------Génération 8-------------')
-# loadGeneration(810, 899)

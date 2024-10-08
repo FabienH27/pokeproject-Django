@@ -1,5 +1,4 @@
-from django.db import models
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
@@ -74,7 +73,7 @@ def register(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('/pokemons')
+            return redirect('/')
     else:
         form = RegisterForm()
     return render(request, 'pokemons/register.html', {'form': form})
@@ -85,16 +84,16 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('/pokemons')
+            return redirect('/')
     else:
         form = AuthenticationForm()
     return render(request,'pokemons/login.html',{'form':form})
 
 def logout_view(request):
     logout(request)
-    return redirect('/pokemons')
+    return redirect('/')
 
-@login_required(login_url='/pokemons/login')
+@login_required(login_url='/login')
 def dashboard(request):
     userPokemons = UserPokemon.objects.filter(user=request.user)
     print(userPokemons)
@@ -116,67 +115,11 @@ def addPokemon(request):
     return JsonResponse(data)
     
 def updatePokemon(request):
-    pokemon_id = request.GET.get('pokemon_id')
     user_id = request.GET.get('user_id')
-    pokemon = Pokemon.objects.get(id=pokemon_id)
     user = User.objects.get(id=user_id)
-    userPokemons =UserPokemon.objects.filter(user=user, pokemon=pokemon).delete()
     pokemonList = UserPokemon.objects.filter(user=user)
     return render(request, 'pokemons/dashboard_table.html', {'user_pokemons':pokemonList})
 
 def searchPokemon(request):
     data = list(Pokemon.objects.filter(name__istartswith=request.GET.get('term')).values('id','name','default_front_sprite_url'))
     return JsonResponse(data,safe=False)
-
-
-
-
-
-    #pokemonEvolution1Length = PokemonEvolution.objects.filter(pokemon=pokemonData).count()
-    #pokemonPrevious = None
-    #pokemonEvolutionPrevious = None
-    #pokemonNext = None
-    #pokemonBase = None
-    #if(pokemonEvolution1Length == 0):
-    #    pokemonEvolution = PokemonEvolution.objects.filter(pokemonEvolution1=pokemonData)
-    #    if(Pokemon.objects.filter(pk=pokemonEvolution[0].pokemon.pk).count() > 0 ):
-    #        pokemonPrevious = Pokemon.objects.filter(pk=pokemonEvolution[0].pokemon.pk).values_list('name','default_front_sprite_url','id')
-    #    pokemonNext = Pokemon.objects.filter(pk=pokemonEvolution[0].pokemonEvolution2.pk).values_list('name','default_front_sprite_url','id')
-    #
-    #pokemonEvolution1 = PokemonEvolution.objects.filter(pokemon=pokemonData)
-    #pokemonEvolution1List = []
-    #for i in range(pokemonEvolution1Length):
-    #    evolution1 = list(Pokemon.objects.filter(pk=pokemonEvolution1[i].pokemonEvolution1.pk).values_list('name','default_front_sprite_url','id'))
-    #    pokemonEvolution1List.append(evolution1[0])
-    #pokemonEvolution1List = list(dict.fromkeys(pokemonEvolution1List))
-    #pokemonEvolution2Length = PokemonEvolution.objects.filter(pokemon=pokemonData).count()
-    #pokemonEvolution2 = PokemonEvolution.objects.filter(pokemon=pokemonData)
-    #pokemonEvolution2List = []
-    #for i in range(pokemonEvolution2Length):
-    #    if pokemonEvolution2[i].pokemonEvolution2 is not None:
-    #        evolution2 = list(Pokemon.objects.filter(pk=pokemonEvolution2[i].pokemonEvolution2.pk).values_list('name','default_front_sprite_url','id'))
-    #        pokemonEvolution2List.append(evolution2[0])
-    #pokemonEvolution2List = list(dict.fromkeys(pokemonEvolution2List))
-    #if(PokemonEvolution.objects.filter(pokemon=pokemon_id).exists()):
-    #    pokemonBase = PokemonEvolution.objects.filter(pokemon=pokemon_id)
-    #    evolution1Count = pokemonBase.values('pokemonEvolution1').count() 
-    #    pokemonEvolution1List = []
-    #    if(evolution1Count > 0):
-    #        for i in range(pokemonEvolution1Length):
-    #            evolution1 = list(Pokemon.objects.filter(pk=pokemonBase[i].pokemonEvolution1.pk).values_list('name','default_front_sprite_url','id'))
-    #            pokemonEvolution1List.append(evolution1[0])
-    #        print(pokemonEvolution1List)
-    #        pokemonEvolution1List = list(dict.fromkeys(pokemonEvolution1List)) 
-    #        
-    #        evolution2Count = pokemonBase.values('pokemonEvolution2').count() 
-    #        if(evolution2Count)
-    #        pokemonEvolution2List = []
-    #        for i in range(pokemonEvolution1Length):
-    #            evolution2 = list(Pokemon.objects.filter(pk=pokemonBase[i].pokemonEvolution2.pk).values_list('name','default_front_sprite_url','id'))
-    #            pokemonEvolution2List.append(evolution2[0])
-    #        print(pokemonEvolution2List)
-
-    #elif(PokemonEvolution.objects.filter(pokemonEvolution1=pokemon_id)):
-    #    print("evolution 1")
-    #elif(PokemonEvolution.objects.filter(pokemonEvolution2=pokemon_id)):
-    #    print("evolution2")

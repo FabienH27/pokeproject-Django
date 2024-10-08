@@ -22,6 +22,16 @@ A personal project to learn Python & Django.
 - Run the command : `py manage.py runserver`
 - Go to http://127.0.0.1:8000/pokemons/
 
+### Useful commands
+
+```sh
+docker-compose exec web python manage.py makemigrations
+```
+
+```sh
+docker-compose exec web python manage.py migrate
+```
+
 ### Author
 
 Fabien Hannon
